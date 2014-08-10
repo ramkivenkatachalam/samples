@@ -1,0 +1,17 @@
+Module contains code and tests for a pizza order processing system. Read pizz_order_processor.pdf 
+for the specification
+
+About the main classes
+**********************
+OrderProcessor.java is the main class that processes orders from STDIN one at a time.
+OrderStore.java is the journal that keeps track of the current state of the order
+OrderUpdate.java represent the update
+
+How to use
+**********
+
+To run tests
+> mvn clean test
+
+To run the order processing application
+> mvn exec:java < sample-data/input1
