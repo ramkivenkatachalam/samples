@@ -3,11 +3,17 @@ package org.ramki.samples;
 import java.util.Stack;
 
 public class TreeTraversal {
+	/* Keeps track of what we have done so far with the Node */
 	enum ProcessingState {
-		LEFT,
-		RIGHT
+		NEW,   // first time we are looking at the node
+		LDONE, // we have already processed the left sub tree
+		RDONE  // we have already processed the right sub tree
 	}
 
+	/**
+	 * Nodes in the Tree 
+	 *
+	 */
 	static class Node {
 		private String label;
 		private Node left;
@@ -37,15 +43,64 @@ public class TreeTraversal {
 		
 		
 	}
-	
+
+	/**
+	 * Genereric function that prints Tree rooted at root in pre, in or post order
+	 * @param root
+	 * @param st (NEW: pre order, LDONE: in order, RDONE: post order)
+	 */
+	public static void printTree(Node root, ProcessingState st) {
+		/*
+		 * we maintain nodes in the stack along with their processing state
+		 */
+		class StackElement {
+			Node node;
+			ProcessingState st;
+			
+			public StackElement(Node node, ProcessingState st) {
+				this.node = node;
+				this.st = st;
+			}
+		}
+		
+		Stack<StackElement> stack = new Stack<StackElement>();
+		Node n = root;
+		while (n != null || !stack.empty()) {
+			if (n != null ) {
+				// seeing a new node push it with NEW state to stack
+				stack.push(new StackElement(n, ProcessingState.NEW));
+				n = null;
+				continue;
+			}
+
+			StackElement s = stack.pop();
+			if (s.st == st) System.out.print(s.node.getLabel() + " ");
+			switch (s.st) { 
+				case NEW:
+					s.st = ProcessingState.LDONE;
+					stack.push(s);
+					n = s.node.getLeft();
+					break;
+				case LDONE:
+					s.st = ProcessingState.RDONE;
+					stack.push(s);
+					n = s.node.getRight();
+					break;
+				default:
+					
+			}
+		}
+        System.out.println();
+	}
+
 	public static void printPreOrder(Node root) {
-		Stack<Node> st = new Stack<Node>();
-		st.push(root); 
-		while (!st.empty()) {
-			Node n = st.pop();
+		Stack<Node> stack = new Stack<Node>();
+		stack.push(root); 
+		while (!stack.empty()) {
+			Node n = stack.pop();
     		System.out.print(n.getLabel() + " ");
-			if (n.getRight() != null) st.push(n.getRight());
-			if (n.getLeft() != null) st.push(n.getLeft());
+			if (n.getRight() != null) stack.push(n.getRight());
+			if (n.getLeft() != null) stack.push(n.getLeft());
 			
 		}
         System.out.println();
@@ -83,15 +138,15 @@ public class TreeTraversal {
 		while (n != null || !stack.empty()) {
 			if (n == null) {
 				StackElement s = stack.pop();
-				if (s.st == ProcessingState.LEFT) { 
-					s.st = ProcessingState.RIGHT;
+				if (s.st == ProcessingState.LDONE) { 
+					s.st = ProcessingState.RDONE;
 					stack.push(s);
 					n = s.node.getRight();
 				} else {
 					System.out.print(s.node.getLabel() + " ");
 				}
 			} else {
-				stack.push(new StackElement(n, ProcessingState.LEFT));
+				stack.push(new StackElement(n, ProcessingState.LDONE));
 				n = n.getLeft();
 			}
 		}
@@ -111,9 +166,12 @@ public class TreeTraversal {
 		root.setLeft(B);
 		root.setRight(C);
 		
-		//printPreOrder(root);
-		//printInOrder(root);
+		printPreOrder(root);
+		printInOrder(root);
 		printPostOrder(root);
+		printTree(root, ProcessingState.NEW);
+		printTree(root, ProcessingState.LDONE);
+		printTree(root, ProcessingState.RDONE);
 	}
 
 }
