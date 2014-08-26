@@ -3,7 +3,7 @@ package org.ramki.samples;
 import java.util.Scanner;
 import java.io.*;
 
-public class Solution {
+public class Solution3 {
     public static void main(String args[] ) throws Exception {
 	    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
 	    /*
