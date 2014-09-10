@@ -1,10 +1,16 @@
 package org.ramki.samples;
-import java.io.*;
+
 import java.util.HashMap;
 import java.util.Map;
+
+/**
+ * Given an array of integers figure out if there are two integers that have a difference of K
+ * 
+ * @author ramki
+ *
+ */
 public class  KDiff {
     public static void main(String args[] ) throws Exception {
-        // FIXME: replace init code with code to read k and array from STDIN
     	int k = 5;
     	// NOTE: assumes array has no duplicates
     	int array[] = {12, 7, 23, 10, 9, 8, 3, 11};

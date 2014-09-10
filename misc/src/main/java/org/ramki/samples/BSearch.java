@@ -1,5 +1,11 @@
 package org.ramki.samples;
 
+/**
+ * Implementation of a search(lookup) algorithm for a Binary Search Tree.
+ * 
+ * @author ramki
+ *
+ */
 public class BSearch {
 	class Node {
 		Node left, right;

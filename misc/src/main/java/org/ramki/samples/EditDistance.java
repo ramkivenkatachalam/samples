@@ -1,8 +1,8 @@
 package org.ramki.samples;
 
 /**
- * Compute minimum edit distance for two input strings (a and b). Cost of transform/delete and insert 
- * all 1 unit.
+ * Compute Minimum Edit Distance (MED) for two input strings (a and b). Cost of transform/delete 
+ * and insert all 1 unit.
  * 
  * This is a dynamic programming solution that computes MED for progressively longer prefixes of a and b
  * until we have the MED for full string a and b. 
